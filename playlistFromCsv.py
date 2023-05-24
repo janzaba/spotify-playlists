@@ -2,14 +2,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import csv
 import argparse
-
-# Spotify app credentials
-SPOTIPY_CLIENT_ID = 'app_client_id'
-SPOTIPY_CLIENT_SECRET = 'app_client_secret'
-SPOTIPY_REDIRECT_URI = 'http://localhost:8000/callback'
-
-# User ID
-USER_ID = 'janzaba'
+import config
 
 # CSV file name
 CSV_FILE_NAME = 'songs.csv'
@@ -25,13 +18,13 @@ args = parser.parse_args()
 PLAYLIST_NAME = args.name
 
 # Create Spotify object
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
-                                               client_secret=SPOTIPY_CLIENT_SECRET,
-                                               redirect_uri=SPOTIPY_REDIRECT_URI,
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=config.SPOTIPY_CLIENT_ID,
+                                               client_secret=config.SPOTIPY_CLIENT_SECRET,
+                                               redirect_uri=config.SPOTIPY_REDIRECT_URI,
                                                scope='playlist-modify-public'))
 
 # Create playlist
-playlist = sp.user_playlist_create(USER_ID, PLAYLIST_NAME)
+playlist = sp.user_playlist_create(config.USER_ID, PLAYLIST_NAME)
 
 # Read CSV file
 with open(CSV_FILE_NAME, 'r') as f:
